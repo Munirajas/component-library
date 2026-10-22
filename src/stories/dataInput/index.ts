@@ -3,3 +3,4 @@
 // ===================================
 
 export * from './Input.stories';
+export * from './GroupedSelect.stories';

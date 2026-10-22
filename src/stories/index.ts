@@ -10,6 +10,10 @@ export * from "./actions/Toggle.stories";
 
 // Data Input
 export * from "./dataInput/Input.stories";
+export * from "./dataInput/GroupedSelect.stories";
+
+// Sortable list
+export * from "./sortableList/SortableList.stories";
 
 // Navigation
 export * from "./navigation/SidebarMenu.stories";
