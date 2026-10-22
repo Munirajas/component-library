@@ -1,0 +1,1 @@
+{"version":3,"file":"richtextviewer.d.ts","sourceRoot":"","sources":["../../../src/components/richTextViewer/richtextviewer.tsx"],"names":[],"mappings":"AAEA,OAAO,sBAAsB,CAAC;AAE9B,MAAM,WAAW,mBAAmB;IAClC,8BAA8B;IAC9B,IAAI,EAAE,MAAM,CAAC;IACb,iEAAiE;IACjE,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED,wBAAgB,cAAc,CAAC,EAAE,IAAI,EAAE,SAAc,EAAE,EAAE,mBAAmB,kDA0B3E"}

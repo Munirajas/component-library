@@ -1,0 +1,22 @@
+export declare const ItalicIcon: import("react/jsx-runtime").JSX.Element;
+export declare const Bold: import("react/jsx-runtime").JSX.Element;
+export declare const UnderlineIcon: import("react/jsx-runtime").JSX.Element;
+export declare const List: import("react/jsx-runtime").JSX.Element;
+export declare const Strikethrough: import("react/jsx-runtime").JSX.Element;
+export declare const Braces: import("react/jsx-runtime").JSX.Element;
+export declare const Superscript: import("react/jsx-runtime").JSX.Element;
+export declare const Subscript: import("react/jsx-runtime").JSX.Element;
+export declare const ListOrdered: import("react/jsx-runtime").JSX.Element;
+export declare const ListIndentIncrease: import("react/jsx-runtime").JSX.Element;
+export declare const ListIndentDecrease: import("react/jsx-runtime").JSX.Element;
+export declare const TextAlignStart: import("react/jsx-runtime").JSX.Element;
+export declare const TextAlignEnd: import("react/jsx-runtime").JSX.Element;
+export declare const TextAlignCenter: import("react/jsx-runtime").JSX.Element;
+export declare const TextAlignJustify: import("react/jsx-runtime").JSX.Element;
+export declare const Link: import("react/jsx-runtime").JSX.Element;
+export declare const UnLink: import("react/jsx-runtime").JSX.Element;
+export declare const InsertImage: import("react/jsx-runtime").JSX.Element;
+export declare const Eraser: import("react/jsx-runtime").JSX.Element;
+export declare const Undo: import("react/jsx-runtime").JSX.Element;
+export declare const Redo: import("react/jsx-runtime").JSX.Element;
+//# sourceMappingURL=icons.d.ts.map

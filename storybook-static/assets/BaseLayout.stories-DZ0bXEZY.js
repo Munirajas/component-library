@@ -1,0 +1,5 @@
+import{j as a}from"./jsx-runtime-BjG_zV1W.js";import{B as s,C as n}from"./BaseLayout-xvdTbfGv.js";import"./iframe-DipnVlAM.js";import"./preload-helper-C1FmrZbK.js";import"./clsx-B-dksMZM.js";import"./SidebarMenu-CNo5jk4q.js";import"./icons-vHqGCt2y.js";import"./Button-Dmo6RmjD.js";import"./DarkModeToggle-mG4lsO80.js";import"./ColorSystemSelector-DSjHt-Ck.js";import"./Input-BPJhsZKz.js";import"./BaseComponents-ClchX4--.js";const h={title:"Layout/BaseLayout",component:s,parameters:{layout:"centered",docs:{description:{component:"Base Layout component."}}},argTypes:{children:{control:{type:"text"},description:"Any data as children"},leftCol:{component:a.jsx(n,{children:"Data"}),description:"Left column content"},rightCol:{control:!1,description:"Right Colum content"}},tags:["autodocs"]},t={args:{children:"BaseLayout"}};var o,e,r;t.parameters={...t.parameters,docs:{...(o=t.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    children: "BaseLayout"
+  }
+}`,...(r=(e=t.parameters)==null?void 0:e.docs)==null?void 0:r.source}}};const x=["BaseLayoutDefault"];export{t as BaseLayoutDefault,x as __namedExportsOrder,h as default};

@@ -1,0 +1,145 @@
+/* ===================================
+   TAILWIND CSS v4 WITH DARK MODE SUPPORT
+   =================================== */
+
+@import "tailwindcss";
+
+/* Especificar archivos a escanear */
+@source "../**/*.{js,ts,jsx,tsx}";
+@source "../../examples/**/*.{js,ts,jsx,tsx}";
+@source "../../.storybook/**/*.{js,ts,jsx,tsx}";
+
+/* Configure dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom theme */
+@theme {
+  /* Custom fonts */
+  --font-mulish: Mulish, sans-serif;
+  
+  --font-family-mulish: var(--font-mulish);
+  
+  /* Custom spacing */
+  --spacing-18: 4.5rem; /* 72px */
+  --spacing-88: 22rem; /* 352px */
+  
+  /* Custom shadows */
+  --shadow-sidebar: 9px 0px 15px 0px rgba(6, 6, 7, 0.15);
+  --shadow-sidebar-dark: 9px 0px 15px 0px rgba(0, 0, 0, 0.3);
+  
+  /* Custom colors - Tailwind v4 requires defining each variant as a separate color */
+  /* CTA Accent */
+  --color-cta-accent: var(--color-cta-accent-default);
+  --color-cta-accent-hover: var(--color-cta-accent-hover);
+  --color-cta-accent-active: var(--color-cta-accent-active);
+  --color-cta-accent-disabled: var(--color-cta-accent-disabled);
+  
+  /* CTA hover */
+  --color-cta-hover: var(--color-cta-hover-default);
+  --color-cta-hover-hover: var(--color-cta-hover-hover);
+  --color-cta-hover-active: var(--color-cta-hover-active);
+  --color-cta-hover-disabled: var(--color-cta-hover-disabled);
+  
+  /* Button grey */
+  --color-button-grey: var(--color-button-grey-default);
+  --color-button-grey-hover: var(--color-button-grey-hover);
+  --color-button-grey-active: var(--color-button-grey-active);
+  --color-button-grey-disabled: var(--color-button-grey-disabled);
+  
+  /* Text primary */
+  --color-text-primary: var(--color-text-primary-default);
+  --color-text-primary-hover: var(--color-text-primary-hover);
+  --color-text-primary-active: var(--color-text-primary-active);
+  --color-text-primary-disabled: var(--color-text-primary-disabled);
+  
+  /* Text secondary */
+  --color-text-secondary: var(--color-text-secondary-default);
+  --color-text-secondary-hover: var(--color-text-secondary-hover);
+  --color-text-secondary-active: var(--color-text-secondary-active);
+  --color-text-secondary-disabled: var(--color-text-secondary-disabled);
+  
+  /* Surface Primary */
+  --color-surface-primary: var(--color-surface-primary-default);
+  --color-surface-primary-hover: var(--color-surface-primary-hover);
+  --color-surface-primary-active: var(--color-surface-primary-active);
+  --color-surface-primary-disabled: var(--color-surface-primary-disabled);
+  
+  /* Surface Secondary */
+  --color-surface-secondary: var(--color-surface-secondary-default);
+  --color-surface-secondary-hover: var(--color-surface-secondary-hover);
+  --color-surface-secondary-active: var(--color-surface-secondary-active);
+  --color-surface-secondary-disabled: var(--color-surface-secondary-disabled);
+  
+  /* Border Accent */
+  --color-border-accent: var(--color-border-accent-default);
+  --color-border-accent-hover: var(--color-border-accent-hover);
+  --color-border-accent-active: var(--color-border-accent-active);
+  --color-border-accent-disabled: var(--color-border-accent-disabled);
+  
+  /* Surface Cards */
+  --color-surface-cards-01: #EBEFF6;
+  --color-surface-cards-02: #F4F5F8;
+  
+  /* Stroke Accent */
+  --color-stroke-accent: #0273CF;
+  
+  /* Accordion Border Accent */
+  --color-accordion-border-accent: var(--color-panel-border-accent-default);
+  --color-accordion-border-accent-hover: var(--color-border-accent-hover);
+  --color-accordion-border-accent-active: var(--color-panel-border-accent-active);
+  --color-accordion-border-accent-disabled: var(--color-panel-border-accent-disabled);
+}
+
+/* Custom CSS for the sidebar menu */
+@layer components {
+  .sidebar-menu {
+    @apply bg-surface-primary shadow-sidebar outline outline-1 outline-offset-[-0.50px] outline-button-grey;
+  }
+  
+  .sidebar-menu-item {
+    @apply flex-1 h-14 p-4 bg-surface-primary rounded-lg outline outline-2 outline-offset-[-2px] outline-button-grey hover:bg-surface-primary-hover hover:outline-button-grey-hover focus:outline-none focus:ring-2 focus:ring-cta-accent focus:ring-offset-2 flex items-center;
+  }
+  
+  .sidebar-menu-item-active {
+    @apply bg-surface-primary-active outline-cta-accent;
+  }
+  
+  .sidebar-toggle-button {
+    @apply size-12 relative overflow-hidden hover:bg-surface-primary-hover rounded-lg transition-colors duration-200;
+  }
+  
+  .sidebar-brand-logo {
+    @apply size-14 h-9 text-text-primary;
+  }
+  
+  .sidebar-icon {
+    @apply size-6 text-text-primary;
+  }
+  
+  .sidebar-text {
+    @apply text-text-primary text-base font-bold font-sans uppercase tracking-widest;
+  }
+  
+  .sidebar-section-title {
+    @apply text-text-primary text-base font-semibold font-sans;
+  }
+  
+  .sidebar-signout-button {
+    @apply flex-1 self-stretch p-4 bg-surface-secondary rounded-lg flex items-center transition-all duration-200 hover:bg-surface-secondary-hover hover:outline outline-2 outline-offset-[-2px] outline-button-grey-hover;
+  }
+}
+
+/* Custom animations */
+@layer utilities {
+  .transition-sidebar {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .sidebar-expanded {
+    @apply w-96;
+  }
+  
+  .sidebar-collapsed {
+    @apply w-32;
+  }
+}

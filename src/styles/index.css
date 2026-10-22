@@ -1,0 +1,364 @@
+/* ===================================
+   MAIN CSS STYLES - REACT COMPONENT LIBRARY
+   =================================== */
+
+@import "./tailwind.css";
+
+/* Base style for components */
+@layer base {
+  :root {
+    /* light */
+    --color-cta-accent-default: #3b82f6;
+    --color-cta-accent-hover: #2563eb;
+    --color-cta-accent-active: #1d4ed8;
+    --color-cta-accent-disabled: #93c5fd;
+
+    --color-cta-hover-default: #2563eb;
+    --color-cta-hover-hover: #1d4ed8;
+    --color-cta-hover-active: #1e40af;
+    --color-cta-hover-disabled: #93c5fd;
+
+    --color-button-grey-default: #6b7280;
+    --color-button-grey-hover: #4b5563;
+    --color-button-grey-active: #374151;
+    --color-button-grey-disabled: #d1d5db;
+
+    --color-text-primary-default: #111827;
+    --color-text-primary-hover: #1f2937;
+    --color-text-primary-active: #374151;
+    --color-text-primary-disabled: #9ca3af;
+
+    --color-text-secondary-default: #6b7280;
+    --color-text-secondary-hover: #4b5563;
+    --color-text-secondary-active: #374151;
+    --color-text-secondary-disabled: #d1d5db;
+
+    --color-surface-primary-default: #ffffff;
+    --color-surface-primary-hover: #f9fafb;
+    --color-surface-primary-active: #f3f4f6;
+    --color-surface-primary-disabled: #f9fafb;
+
+    --color-surface-secondary-default: #eff4fb;
+    --color-surface-secondary-hover: #f9fafb;
+    --color-surface-secondary-active: #f3f4f6;
+    --color-surface-secondary-disabled: #f9fafb;
+
+    --color-border-accent-default: #3b82f6;
+    --color-border-accent-hover: #2563eb;
+    --color-border-accent-active: #1d4ed8;
+    --color-border-accent-disabled: #93c5fd;
+
+    --color-panel-border-accent-default: #4E555B;
+    --color-panel-border-accent-active: #007DA5;
+    --color-panel-border-accent-disabled: #E1E6E8;
+
+    /* theme configuration */
+    color-scheme: light;
+  }
+
+  /* Default Dark */
+  .default-dark,
+  .dark:not(.training):not(.ocean) {
+    color-scheme: dark;
+
+    --color-cta-accent-default: #60a5fa;
+    --color-cta-accent-hover: #3b82f6;
+    --color-cta-accent-active: #2563eb;
+    --color-cta-accent-disabled: #1e3a8a;
+
+    --color-cta-hover-default: #3b82f6;
+    --color-cta-hover-hover: #2563eb;
+    --color-cta-hover-active: #1d4ed8;
+    --color-cta-hover-disabled: #1e3a8a;
+
+    --color-button-grey-default: #9ca3af;
+    --color-button-grey-hover: #6b7280;
+    --color-button-grey-active: #4b5563;
+    --color-button-grey-disabled: #374151;
+
+    --color-text-primary-default: #f9fafb;
+    --color-text-primary-hover: #f3f4f6;
+    --color-text-primary-active: #e5e7eb;
+    --color-text-primary-disabled: #6b7280;
+
+    --color-text-secondary-default: #9ca3af;
+    --color-text-secondary-hover: #6b7280;
+    --color-text-secondary-active: #4b5563;
+    --color-text-secondary-disabled: #374151;
+
+    --color-surface-primary-default: #1f2937;
+    --color-surface-primary-hover: #374151;
+    --color-surface-primary-active: #4b5563;
+    --color-surface-primary-disabled: #374151;
+
+    --color-surface-secondary-default: #1f2937;
+    --color-surface-secondary-hover: #374151;
+    --color-surface-secondary-active: #4b5563;
+    --color-surface-secondary-disabled: #374151;
+
+    --color-border-accent-default: #60a5fa;
+    --color-border-accent-hover: #3b82f6;
+    --color-border-accent-active: #2563eb;
+    --color-border-accent-disabled: #1e3a8a;
+  }
+
+  /* Training Light */
+  .training-light,
+  .training.light {
+    color-scheme: light;
+
+    --color-cta-accent-default: #8b5cf6;
+    --color-cta-accent-hover: #7c3aed;
+    --color-cta-accent-active: #6d28d9;
+    --color-cta-accent-disabled: #c4b5fd;
+
+    --color-cta-hover-default: #7c3aed;
+    --color-cta-hover-hover: #6d28d9;
+    --color-cta-hover-active: #5b21b6;
+    --color-cta-hover-disabled: #c4b5fd;
+
+    --color-button-grey-default: #8b5cf6;
+    --color-button-grey-hover: #7c3aed;
+    --color-button-grey-active: #6d28d9;
+    --color-button-grey-disabled: #c4b5fd;
+
+    --color-text-primary-default: #581c87;
+    --color-text-primary-hover: #6b21a8;
+    --color-text-primary-active: #7c2d12;
+    --color-text-primary-disabled: #a78bfa;
+
+    --color-text-secondary-default: #7c3aed;
+    --color-text-secondary-hover: #6d28d9;
+    --color-text-secondary-active: #5b21b6;
+    --color-text-secondary-disabled: #c4b5fd;
+
+    --color-surface-primary-default: #f3e8ff;
+    --color-surface-primary-hover: #e9d5ff;
+    --color-surface-primary-active: #ddd6fe;
+    --color-surface-primary-disabled: #f3e8ff;
+
+    --color-surface-secondary-default: #f3e8ff;
+    --color-surface-secondary-hover: #e9d5ff;
+    --color-surface-secondary-active: #ddd6fe;
+    --color-surface-secondary-disabled: #f3e8ff;
+
+    --color-border-accent-default: #8b5cf6;
+    --color-border-accent-hover: #7c3aed;
+    --color-border-accent-active: #6d28d9;
+    --color-border-accent-disabled: #c4b5fd;
+  }
+
+  /* Training Dark */
+  .training-dark,
+  .training.dark {
+    color-scheme: dark;
+
+    --color-cta-accent-default: #a78bfa;
+    --color-cta-accent-hover: #8b5cf6;
+    --color-cta-accent-active: #7c3aed;
+    --color-cta-accent-disabled: #6d28d9;
+
+    --color-cta-hover-default: #8b5cf6;
+    --color-cta-hover-hover: #7c3aed;
+    --color-cta-hover-active: #6d28d9;
+    --color-cta-hover-disabled: #5b21b6;
+
+    --color-button-grey-default: #a78bfa;
+    --color-button-grey-hover: #8b5cf6;
+    --color-button-grey-active: #7c3aed;
+    --color-button-grey-disabled: #6d28d9;
+
+    --color-text-primary-default: #e9d5ff;
+    --color-text-primary-hover: #ddd6fe;
+    --color-text-primary-active: #c4b5fd;
+    --color-text-primary-disabled: #8b5cf6;
+
+    --color-text-secondary-default: #c4b5fd;
+    --color-text-secondary-hover: #a78bfa;
+    --color-text-secondary-active: #8b5cf6;
+    --color-text-secondary-disabled: #7c3aed;
+
+    --color-surface-primary-default: #4c1d95;
+    --color-surface-primary-hover: #5b21b6;
+    --color-surface-primary-active: #6d28d9;
+    --color-surface-primary-disabled: #4c1d95;
+
+    --color-surface-secondary-default: #5b21b6;
+    --color-surface-secondary-hover: #6d28d9;
+    --color-surface-secondary-active: #7c3aed;
+    --color-surface-secondary-disabled: #5b21b6;
+
+    --color-border-accent-default: #a78bfa;
+    --color-border-accent-hover: #8b5cf6;
+    --color-border-accent-active: #7c3aed;
+    --color-border-accent-disabled: #6d28d9;
+  }
+
+  /* Ocean Light */
+  .ocean-light,
+  .ocean.light {
+    color-scheme: light;
+
+    --color-cta-accent-default: #06b6d4;
+    --color-cta-accent-hover: #0891b2;
+    --color-cta-accent-active: #0e7490;
+    --color-cta-accent-disabled: #67e8f9;
+
+    --color-cta-hover-default: #0891b2;
+    --color-cta-hover-hover: #0e7490;
+    --color-cta-hover-active: #155e75;
+    --color-cta-hover-disabled: #67e8f9;
+
+    --color-button-grey-default: #155e75;
+    --color-button-grey-hover: #0e7490;
+    --color-button-grey-active: #164e63;
+    --color-button-grey-disabled: #67e8f9;
+
+    --color-text-primary-default: #164e63;
+    --color-text-primary-hover: #155e75;
+    --color-text-primary-active: #0e7490;
+    --color-text-primary-disabled: #22d3ee;
+
+    --color-text-secondary-default: #155e75;
+    --color-text-secondary-hover: #0e7490;
+    --color-text-secondary-active: #0891b2;
+    --color-text-secondary-disabled: #67e8f9;
+
+    --color-surface-primary-default: #ecfeff;
+    --color-surface-primary-hover: #cffafe;
+    --color-surface-primary-active: #a5f3fc;
+    --color-surface-primary-disabled: #ecfeff;
+
+    --color-surface-secondary-default: #cffafe;
+    --color-surface-secondary-hover: #a5f3fc;
+    --color-surface-secondary-active: #67e8f9;
+    --color-surface-secondary-disabled: #ecfeff;
+
+    --color-border-accent-default: #06b6d4;
+    --color-border-accent-hover: #0891b2;
+    --color-border-accent-active: #0e7490;
+    --color-border-accent-disabled: #67e8f9;
+  }
+
+  /* Ocean Dark */
+  .ocean-dark,
+  .ocean.dark {
+    color-scheme: dark;
+
+    --color-cta-accent-default: #22d3ee;
+    --color-cta-accent-hover: #06b6d4;
+    --color-cta-accent-active: #0891b2;
+    --color-cta-accent-disabled: #0e7490;
+
+    --color-cta-hover-default: #06b6d4;
+    --color-cta-hover-hover: #0891b2;
+    --color-cta-hover-active: #0e7490;
+    --color-cta-hover-disabled: #155e75;
+
+    --color-button-grey-default: #22d3ee;
+    --color-button-grey-hover: #06b6d4;
+    --color-button-grey-active: #0891b2;
+    --color-button-grey-disabled: #155e75;
+
+    --color-text-primary-default: #ecfeff;
+    --color-text-primary-hover: #cffafe;
+    --color-text-primary-active: #a5f3fc;
+    --color-text-primary-disabled: #67e8f9;
+
+    --color-text-secondary-default: #a5f3fc;
+    --color-text-secondary-hover: #67e8f9;
+    --color-text-secondary-active: #22d3ee;
+    --color-text-secondary-disabled: #06b6d4;
+
+    --color-surface-primary-default: #164e63;
+    --color-surface-primary-hover: #155e75;
+    --color-surface-primary-active: #0e7490;
+    --color-surface-primary-disabled: #164e63;
+
+    --color-surface-secondary-default: #155e75;
+    --color-surface-secondary-hover: #0e7490;
+    --color-surface-secondary-active: #0891b2;
+    --color-surface-secondary-disabled: #155e75;
+
+    --color-border-accent-default: #22d3ee;
+    --color-border-accent-hover: #06b6d4;
+    --color-border-accent-active: #0891b2;
+    --color-border-accent-disabled: #0e7490;
+  }
+
+  /* Reduce movement */
+  [data-reduced-motion="true"] *,
+  [data-reduced-motion="true"] *::before,
+  [data-reduced-motion="true"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Personalized styles */
+@layer components {
+  .theme-customizer {
+    font-family: system-ui, sans-serif;
+  }
+
+  .theme-customizer h3,
+  .theme-customizer h4 {
+    font-weight: 600;
+  }
+
+  .theme-customizer .control-label {
+    font-weight: 500;
+  }
+
+  .cta-secondary {
+    @apply outline outline-2 outline-offset-[4px] outline-sky-500 dark:text-gray-500;
+  }
+
+  .btn {
+    @apply bg-cta-accent p-6 justify-center items-center text-text-primary
+  }
+
+  .modal {
+    z-index: 100 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modalBackground {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(33, 33, 33, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modalContainer {
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+}

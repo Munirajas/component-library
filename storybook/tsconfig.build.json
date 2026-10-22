@@ -1,0 +1,23 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "declarationMap": true,
+        "noEmit": false,
+        "esModuleInterop": true,
+    },
+    "include": ["src/index.ts","src/components/**/*.{ts,tsx}","src/hooks/**/*.{ts,tsx}","src/themes/**/*.{ts,tsx}","src/icons/**/*.{ts,tsx}","src/types/**/*.{ts,tsx}"],
+    "exclude": [
+        "**/*.stories.*",
+        "src/stories/**/*",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "src/**/*.stories.*",
+        "src/**/*.test.*",
+        "src/**/*.spec.*",
+        "node_modules",
+        "vite.config.ts",
+        "vite.lib.config.ts"
+  ]
+}

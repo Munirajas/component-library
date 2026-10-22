@@ -1,0 +1,106 @@
+/* ===================================
+   SIDEBAR MENU SAMPLE DATA
+   =================================== */
+
+import { MenuSection } from './SidebarMenu';
+
+// Sample menu data based on the HTML design
+export const sampleSidebarMenuData: MenuSection[] = [
+  {
+    id: 'sales',
+    title: 'Sales',
+    items: [
+      {
+        id: 'home',
+        label: 'home',
+        icon: 'Home',
+        href: '/'
+      },
+      {
+        id: 'events',
+        label: 'events',
+        icon: 'Calendar',
+        href: '/events'
+      },
+      {
+        id: 'tickets',
+        label: 'tickets',
+        icon: 'Ticket',
+        href: '/ticketing'
+      },
+      {
+        id: 'groups',
+        label: 'groups',
+        icon: 'users',
+        href: '/tours-groups'
+      }
+    ]
+  },
+  {
+    id: 'customer-management',
+    title: 'Customer Management',
+    items: [
+      {
+        id: 'customer-mgt',
+        label: 'customer mgt.',
+        icon: 'user-cog',
+        href: '/access-control/users'
+      }
+    ]
+  },
+  {
+    id: 'administrative',
+    title: 'Administrative',
+    items: [
+      {
+        id: 'seating-maps',
+        label: 'seating maps',
+        icon: 'couch',
+        href: '/seating-maps'
+      },
+      {
+        id: 'pricing-tables',
+        label: 'pricing tables',
+        icon: 'usd-circle',
+        href: '/pricing'
+      },
+      {
+        id: 'discounts-promos',
+        label: 'discounts & promos',
+        icon: 'tag',
+        href: '/discounts'
+      },
+      {
+        id: 'bundles',
+        label: 'bundles',
+        icon: 'cabinet-filing',
+        href: '/bundles'
+      },
+      {
+        id: 'data-configuration',
+        label: 'Data Configuration',
+        icon: 'cabinet-filing',
+        href: '/data-config'
+      },
+      {
+        id: 'legal',
+        label: 'legal',
+        icon: 'balance-scale',
+        href: '/legal'
+      },
+      {
+        id: 'system-staff-mgt',
+        label: 'system / staff mgt.',
+        icon: 'Settings',
+        href: '/system'
+      }
+    ]
+  }
+];
+
+// Default props for the component
+export const defaultSidebarMenuProps = {
+  sections: sampleSidebarMenuData,
+  isExpanded: true,
+  brandName: 'Admin Panel'
+};
