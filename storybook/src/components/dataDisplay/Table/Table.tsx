@@ -12,7 +12,11 @@ export interface TableColumn {
   key: string;
   label: string;
   sortable?: boolean;
+  /** Fixed size when min/max are omitted. Tailwind class (`w-48`) or a CSS length (`12rem`). */
   width?: string;
+  /** Tailwind class (`min-w-32`) or a CSS length. The column will not shrink past this. */
+  minWidth?: string;
+  /** Tailwind class (`max-w-xs`) or a CSS length. The column will not grow past this. */
   maxWidth?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render?: (value: any, row: TableData) => React.ReactNode;

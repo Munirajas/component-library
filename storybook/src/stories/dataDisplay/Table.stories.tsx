@@ -384,6 +384,29 @@ export const CustomColumns: Story = {
   },
 };
 
+// Width, minWidth and maxWidth stay on those columns. The others share the rest.
+export const ColumnWidths: Story = {
+  args: {
+    data: userData,
+    columns: [
+      { key: 'id', label: 'ID', sortable: true, width: '4rem' },
+      { key: 'name', label: 'Name', sortable: true, minWidth: '8rem', maxWidth: '14rem' },
+      { key: 'email', label: 'Email', sortable: true },
+      { key: 'role', label: 'Role', sortable: true, width: 'w-28', minWidth: 'w-24', maxWidth: 'w-40' },
+      { key: 'status', label: 'Status', sortable: true },
+    ],
+    searchable: false,
+    filterable: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'ID is fixed at 4rem. Name stays between 8rem and 14rem. Role stays between w-24 and w-40. Email and Status fill the remaining width.',
+      },
+    },
+  },
+};
+
 // Table - State Controlled
 export const Controlled: Story = {
   render: () => {

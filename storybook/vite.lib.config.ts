@@ -15,7 +15,7 @@ export default defineConfig({
     },
     rollupOptions: {
       input:['src/index.ts'],
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'react-select', 'react-select/creatable'],
       output: {
         globals: {
           react: 'React',

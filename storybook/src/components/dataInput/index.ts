@@ -10,3 +10,5 @@ export type {
   GroupedSelectGroup,
   GroupedSelectOption,
 } from './GroupedSelect';
+export { Select, default as SelectDefault } from './Select';
+export type { SelectProps, SelectOption, SelectGroup } from './Select';

@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { columnLayout } from "./columnLayout";
 import { RowAction, TableColumn, TableData, TableStickyHeaderConfig } from "./Table";
 
 interface FlyoutPosition {
@@ -224,7 +225,7 @@ export function TableContent({
   // the wrapper must clip instead of hiding overflow to let the header stick
   // to the viewport.
   const wrapperOverflowClass = !stickyConfig
-    ? "overflow-x-scroll md:overflow-hidden"
+    ? "overflow-x-auto"
     : scrollsInternally
       ? "overflow-auto"
       : "overflow-x-scroll md:overflow-clip";
@@ -240,10 +241,10 @@ export function TableContent({
           className={`bg-gray-50 border-b border-gray-200 ${stickyConfig ? "sticky z-10" : ""}`}
           style={stickyConfig ? { top: stickyConfig.offset ?? 0 } : undefined}
         >
-          <div className="flex">
+          <div className="flex w-full">
             {/* Checkbox to select all */}
             {selectable && (
-              <div className="w-16 p-4 flex items-center justify-center">
+              <div className="w-16 shrink-0 p-4 flex items-center justify-center">
                 <input
                   type="checkbox"
                   checked={allSelected}
@@ -257,20 +258,23 @@ export function TableContent({
             )}
 
             {/* Header Columns */}
-            {columns.map((column) => (
+            {columns.map((column) => {
+              const layout = columnLayout(column);
+              return (
               <div
                 key={column.key}
-                className={`flex-1 p-4 ${column.width ? column.width : ""}`}
+                className={`p-4 ${layout.className}`}
+                style={layout.style}
               >
                 <button
                   onClick={() => column.sortable && onSort(column.key)}
-                  className={`w-full flex items-center justify-between text-sm font-semibold text-gray-800 uppercase tracking-wider ${column.sortable
+                  className={`w-full min-w-0 flex items-center justify-between gap-2 text-sm font-semibold text-gray-800 uppercase tracking-wider ${column.sortable
                     ? "cursor-pointer hover:text-blue-600"
                     : "cursor-default"
                     }`}
                   disabled={!column.sortable}
                 >
-                  {column.label}
+                  <span className="truncate">{column.label}</span>
                   {column.sortable && (
                     <span className="ml-2 text-gray-400">
                       {getSortIcon(column.key)}
@@ -278,10 +282,11 @@ export function TableContent({
                   )}
                 </button>
               </div>
-            ))}
+              );
+            })}
 
             {/* Actions column header */}
-            {hasRowActions && <div className="w-16 p-4" />}
+            {hasRowActions && <div className="w-16 shrink-0 p-4" />}
           </div>
         </div>
 
@@ -300,10 +305,10 @@ export function TableContent({
 
             return (
               <React.Fragment key={rowId}>
-                <div className="flex hover:bg-gray-50">
+                <div className="flex w-full hover:bg-gray-50">
                   {/* Row Checkbox */}
                   {selectable && (
-                    <div className="w-16 p-4 flex items-center justify-center">
+                    <div className="w-16 shrink-0 p-4 flex items-center justify-center">
                       <input
                         type="checkbox"
                         checked={selectedRows.includes(rowId)}
@@ -314,17 +319,21 @@ export function TableContent({
                   )}
 
                   {/* Row data */}
-                  {columns.map((column) => (
+                  {columns.map((column) => {
+                    const layout = columnLayout(column);
+                    return (
                     <div
                       key={column.key}
-                      className={`flex-1 p-4 ${column.width ? column.width : ""} ${column.maxWidth ? column.maxWidth : ""}`}
+                      className={`p-4 ${layout.className}`}
+                      style={layout.style}
                     >
                       {renderCell(column, row)}
                     </div>
-                  ))}
+                    );
+                  })}
 
                   {/* Expand / Row-actions trigger */}
-                  {hasRowActions && <div className="w-16 p-4 flex items-center justify-center">
+                  {hasRowActions && <div className="w-16 shrink-0 p-4 flex items-center justify-center">
                     <button
                       onClick={(e) => handleToggleFlyout(e, rowId)}
                       aria-label="Row actions"
