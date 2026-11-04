@@ -5,7 +5,6 @@ import {
   type GroupedSelectGroup,
 } from "../../components/dataInput/GroupedSelect";
 
-// Same shape as the funnel "Includes" picker: amenities grouped by location.
 const amenityGroups: GroupedSelectGroup<number>[] = [
   {
     id: "okc",
@@ -87,7 +86,6 @@ export const Default: Story = {
   },
 };
 
-// Funnel field turns search on.
 export const Searchable: Story = {
   args: {
     groups: amenityGroups,
@@ -126,7 +124,6 @@ export const Disabled: Story = {
   },
 };
 
-// Trigger stays disabled and shows the empty copy. Happens once every amenity is already assigned.
 export const Empty: Story = {
   args: {
     groups: [

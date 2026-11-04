@@ -98,7 +98,6 @@ export const Multiple: Story = {
   },
 };
 
-// Same case as the amenity pricing tab: pick a default type or type a new name.
 export const CreateNew: Story = {
   render: () => {
     const [value, setValue] = useState<SelectOption | null>(null);
