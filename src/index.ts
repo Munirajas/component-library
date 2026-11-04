@@ -58,8 +58,20 @@ export type { LayoutColumn, LayoutProps } from "./types/layout";
 // Explicit type exports that are not forwarded by export *
 export type { DrawerProps, DrawerAction, DrawerTab } from './components/feedback/Drawer';
 export type { TabItem, TabsProps, TabsVariant } from './components/navigation/Tabs';
-export type { PopoverProps } from './components/feedback/Popover';
-export { Popover } from './components/feedback/Popover';
+export type { PopoverProps, PopoverPlacement, PopoverTriggerType, PopoverBackdrop } from './components/feedback/Popover';
+export type { TooltipProps, TooltipPlacement, TooltipTriggerMode, TooltipColor, TooltipSize, TooltipRadius } from './components/feedback/Tooltip';
+export type {
+  CalendarProps,
+  CalendarEvent,
+  CalendarViewType,
+  CalendarEventLabelKey,
+  CalendarEventLabelConfig,
+  CalendarEventLabelMap,
+  CalendarColorTheme,
+  CalendarToolbarConfig,
+  CalendarToolbarContext,
+  CalendarToolbarItems,
+} from './components/calendar';
 export type { FilterDefinition, FilterOption, FilterType, FilterPopoverProps } from './components/dataDisplay/Table/FilterPopover';
 export { FilterPopover } from './components/dataDisplay/Table/FilterPopover';
 

@@ -1,0 +1,67 @@
+.hl-calendar {
+  --hl-calendar-primary: #2563eb;
+  --hl-calendar-primary-hover: #1d4ed8;
+  --hl-calendar-primary-active: #1e40af;
+  --hl-calendar-primary-foreground: #ffffff;
+  --hl-calendar-secondary: #dbeafe;
+  --hl-calendar-secondary-foreground: #1e3a8a;
+  --hl-calendar-event: #2563eb;
+  --hl-calendar-event-text: #ffffff;
+  --hl-calendar-today: #dbeafe;
+  --hl-calendar-border: #93c5fd;
+  --hl-calendar-text: #1e3a8a;
+
+  --fc-monarch-primary: var(--hl-calendar-primary);
+  --fc-monarch-primary-foreground: var(--hl-calendar-primary-foreground);
+  --fc-monarch-primary-over: var(--hl-calendar-primary-hover);
+  --fc-monarch-primary-down: var(--hl-calendar-primary-active);
+  --fc-monarch-secondary: var(--hl-calendar-secondary);
+  --fc-monarch-secondary-foreground: var(--hl-calendar-secondary-foreground);
+  --fc-monarch-event: var(--hl-calendar-event);
+  --fc-monarch-event-contrast: var(--hl-calendar-event-text);
+  --fc-monarch-highlight: color-mix(in srgb, var(--hl-calendar-secondary) 70%, transparent);
+  --fc-monarch-outline: var(--hl-calendar-primary);
+}
+
+.hl-calendar .fc {
+  font-family: Mulish, Muli, sans-serif;
+  color: #111827;
+}
+
+.hl-calendar .fc-event {
+  border: 0;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.hl-calendar .fc-day-today {
+  background-color: var(--hl-calendar-today) !important;
+}
+
+.hl-calendar .fc-col-header-cell-cushion,
+.hl-calendar .fc-daygrid-day-number {
+  color: var(--hl-calendar-text);
+}
+
+.hl-calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.hl-calendar-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.hl-calendar-legend-swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+}
