@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { clsx } from 'clsx';
 import 'temporal-polyfill/global';
 import FullCalendarBase, {
@@ -25,6 +25,7 @@ import {
 } from './dateUtils';
 import {
   CALENDAR_VIEW_MAP,
+  type CalendarEvent,
   type CalendarProps,
   type CalendarToolbarContext,
   type CalendarViewType,
@@ -37,9 +38,12 @@ const VIEW_BY_PLUGIN: Record<string, CalendarViewType> = {
   dayGridMonth: 'month',
 };
 
+const EMPTY_EVENTS: CalendarEvent[] = [];
+const DEFAULT_VIEWS: CalendarViewType[] = ['day', 'week', 'month'];
+
 export function FullCalendar({
-  events = [],
-  views = ['day', 'week', 'month'],
+  events = EMPTY_EVENTS,
+  views = DEFAULT_VIEWS,
   defaultView = 'month',
   view,
   onViewChange,
@@ -80,9 +84,14 @@ export function FullCalendar({
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [title, setTitle] = useState('');
   const [visibleRange, setVisibleRange] = useState<{ start: Date; end: Date } | null>(null);
-  const theme = mergeColorTheme(colorTheme);
-  const availableViews: CalendarViewType[] =
-    views.length > 0 ? views : ['day', 'week', 'month'];
+  const theme = useMemo(() => mergeColorTheme(colorTheme), [colorTheme]);
+  const availableViews = views.length > 0 ? views : DEFAULT_VIEWS;
+  const optionsRef = useRef(options);
+  const onViewChangeRef = useRef(onViewChange);
+  const currentViewRef = useRef(currentView);
+  optionsRef.current = options;
+  onViewChangeRef.current = onViewChange;
+  currentViewRef.current = currentView;
 
   const setSearch = useCallback(
     (value: string) => {
@@ -135,31 +144,47 @@ export function FullCalendar({
 
   const handleDatesSet = useCallback(
     (info: DatesSetInfo) => {
-      setTitle(info.view.title);
-      setVisibleRange({ start: info.start, end: info.end });
+      setTitle((prev) => (prev === info.view.title ? prev : info.view.title));
+      setVisibleRange((prev) => {
+        if (
+          prev &&
+          prev.start.getTime() === info.start.getTime() &&
+          prev.end.getTime() === info.end.getTime()
+        ) {
+          return prev;
+        }
+        return { start: info.start, end: info.end };
+      });
       const mapped = VIEW_BY_PLUGIN[info.view.type];
-      if (mapped && mapped !== currentView) {
+      if (mapped && mapped !== currentViewRef.current) {
         if (!isViewControlled) {
           setInternalView(mapped);
         }
-        onViewChange?.(mapped);
+        onViewChangeRef.current?.(mapped);
       }
-      options?.datesSet?.(info);
+      optionsRef.current?.datesSet?.(info);
     },
-    [currentView, isViewControlled, onViewChange, options],
+    [isViewControlled],
   );
 
-  const toolbarContext: CalendarToolbarContext = {
-    view: currentView,
-    title,
-    searchValue: query,
-    setSearchValue: setSearch,
-    goPrev: () => controller.prev(),
-    goNext: () => controller.next(),
-    goToday: () => controller.today(),
-    changeView,
-    views: availableViews,
-  };
+  const goPrev = useCallback(() => controller.prev(), [controller]);
+  const goNext = useCallback(() => controller.next(), [controller]);
+  const goToday = useCallback(() => controller.today(), [controller]);
+
+  const toolbarContext: CalendarToolbarContext = useMemo(
+    () => ({
+      view: currentView,
+      title,
+      searchValue: query,
+      setSearchValue: setSearch,
+      goPrev,
+      goNext,
+      goToday,
+      changeView,
+      views: availableViews,
+    }),
+    [availableViews, changeView, currentView, goNext, goPrev, goToday, query, setSearch, title],
+  );
 
   const plugins = useMemo(
     () => [
@@ -173,21 +198,28 @@ export function FullCalendar({
     [extraPlugins, options?.plugins],
   );
 
-  const legend = showLegend ? getResolvedLabels(eventLabels) : [];
+  const legend = useMemo(
+    () => (showLegend ? getResolvedLabels(eventLabels) : []),
+    [eventLabels, showLegend],
+  );
 
-  const themeStyle = {
-    '--hl-calendar-primary': theme.primary,
-    '--hl-calendar-primary-hover': theme.primaryHover,
-    '--hl-calendar-primary-active': theme.primaryActive,
-    '--hl-calendar-primary-foreground': theme.primaryForeground,
-    '--hl-calendar-secondary': theme.secondary,
-    '--hl-calendar-secondary-foreground': theme.secondaryForeground,
-    '--hl-calendar-event': theme.event,
-    '--hl-calendar-event-text': theme.eventText,
-    '--hl-calendar-today': theme.today,
-    '--hl-calendar-border': theme.border,
-    '--hl-calendar-text': theme.text,
-  } as CSSProperties;
+  const themeStyle = useMemo(
+    () =>
+      ({
+        '--hl-calendar-primary': theme.primary,
+        '--hl-calendar-primary-hover': theme.primaryHover,
+        '--hl-calendar-primary-active': theme.primaryActive,
+        '--hl-calendar-primary-foreground': theme.primaryForeground,
+        '--hl-calendar-secondary': theme.secondary,
+        '--hl-calendar-secondary-foreground': theme.secondaryForeground,
+        '--hl-calendar-event': theme.event,
+        '--hl-calendar-event-text': theme.eventText,
+        '--hl-calendar-today': theme.today,
+        '--hl-calendar-border': theme.border,
+        '--hl-calendar-text': theme.text,
+      }) as CSSProperties,
+    [theme],
+  );
 
   return (
     <div className={clsx('hl-calendar w-full', className)} style={themeStyle}>

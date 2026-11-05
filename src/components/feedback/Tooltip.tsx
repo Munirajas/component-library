@@ -4,17 +4,13 @@ import React, {
   useCallback,
   useEffect,
   useId,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { clsx } from 'clsx';
-import {
-  computeOverlayPosition,
-  getPlacementSide,
-  type OverlayPlacement,
-} from '../../utils/overlayPosition';
+import { useOverlayPosition } from '../../hooks/useOverlayPosition';
+import { getPlacementSide, type OverlayPlacement } from '../../utils/overlayPosition';
 
 export type TooltipPlacement = OverlayPlacement;
 export type TooltipTriggerMode = 'hover' | 'focus' | 'both';
@@ -140,9 +136,11 @@ export function Tooltip({
   const contentRef = useRef<HTMLDivElement>(null);
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [coords, setCoords] = useState<{ top: number; left: number; placement: OverlayPlacement } | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const delayRef = useRef(delay);
+  const closeDelayRef = useRef(closeDelay);
   const tooltipId = useId();
+  delayRef.current = delay;
+  closeDelayRef.current = closeDelay;
 
   const childArray = React.Children.toArray(children);
   const triggerChild = childArray.find((child) => isElementOfType(child, TooltipTrigger));
@@ -158,15 +156,23 @@ export function Tooltip({
     contentNode !== undefined &&
     contentNode !== false &&
     !(typeof contentNode === 'string' && contentNode.trim() === '');
+  const coords = useOverlayPosition(
+    triggerRef,
+    contentRef,
+    open && hasContent && !isDisabled,
+    contentPlacement,
+    contentOffset,
+  );
 
   const setOpen = useCallback(
     (next: boolean) => {
+      if (open === next) return;
       if (!isControlled) {
         setUncontrolledOpen(next);
       }
       onOpenChange?.(next);
     },
-    [isControlled, onOpenChange],
+    [open, isControlled, onOpenChange],
   );
 
   const clearTimers = () => {
@@ -174,55 +180,20 @@ export function Tooltip({
     if (closeTimer.current) clearTimeout(closeTimer.current);
   };
 
-  const scheduleOpen = () => {
+  const scheduleOpen = useCallback(() => {
     if (isDisabled || !hasContent) return;
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    openTimer.current = setTimeout(() => setOpen(true), delay);
-  };
+    openTimer.current = setTimeout(() => setOpen(true), delayRef.current);
+  }, [hasContent, isDisabled, setOpen]);
 
-  const scheduleClose = () => {
+  const scheduleClose = useCallback(() => {
     if (openTimer.current) clearTimeout(openTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(false), closeDelay);
-  };
+    closeTimer.current = setTimeout(() => setOpen(false), closeDelayRef.current);
+  }, [setOpen]);
 
   useEffect(() => {
-    setMounted(true);
     return () => clearTimers();
   }, []);
-
-  const updatePosition = useCallback(() => {
-    if (!triggerRef.current || !contentRef.current) return;
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    const overlayRect = contentRef.current.getBoundingClientRect();
-    setCoords(
-      computeOverlayPosition(
-        triggerRect,
-        { width: overlayRect.width, height: overlayRect.height },
-        contentPlacement,
-        contentOffset,
-        true,
-      ),
-    );
-  }, [contentPlacement, contentOffset]);
-
-  useLayoutEffect(() => {
-    if (!open) {
-      setCoords(null);
-      return;
-    }
-    updatePosition();
-  }, [open, updatePosition, contentNode]);
-
-  useEffect(() => {
-    if (!open) return;
-    const handleReposition = () => updatePosition();
-    window.addEventListener('resize', handleReposition);
-    window.addEventListener('scroll', handleReposition, true);
-    return () => {
-      window.removeEventListener('resize', handleReposition);
-      window.removeEventListener('scroll', handleReposition, true);
-    };
-  }, [open, updatePosition]);
 
   useEffect(() => {
     if (!open) return;
@@ -245,7 +216,7 @@ export function Tooltip({
   }[side];
 
   const overlay =
-    open && mounted && hasContent && !isDisabled ? (
+    open && hasContent && !isDisabled ? (
       <div
         ref={contentRef}
         id={tooltipId}

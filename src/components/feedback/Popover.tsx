@@ -4,17 +4,13 @@ import React, {
   useCallback,
   useEffect,
   useId,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { clsx } from 'clsx';
-import {
-  computeOverlayPosition,
-  getPlacementSide,
-  type OverlayPlacement,
-} from '../../utils/overlayPosition';
+import { useOverlayPosition } from '../../hooks/useOverlayPosition';
+import { getPlacementSide, type OverlayPlacement } from '../../utils/overlayPosition';
 
 export type PopoverPlacement = OverlayPlacement;
 export type PopoverTriggerType = 'click' | 'hover';
@@ -89,6 +85,7 @@ function useOpenState(
 
   const setOpen = useCallback(
     (next: boolean) => {
+      if (open === next) return;
       if (!isControlled) {
         setUncontrolledOpen(next);
       }
@@ -97,7 +94,7 @@ function useOpenState(
         onClose?.();
       }
     },
-    [isControlled, onOpenChange, onClose],
+    [open, isControlled, onOpenChange, onClose],
   );
 
   return { open, setOpen };
@@ -179,8 +176,6 @@ function TriggeredPopover({
   const { open, setOpen } = useOpenState(isOpen, defaultOpen, onOpenChange, onClose);
   const triggerRef = useRef<HTMLSpanElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [coords, setCoords] = useState<{ top: number; left: number; placement: OverlayPlacement } | null>(null);
-  const [mounted, setMounted] = useState(false);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const popoverId = useId();
 
@@ -190,51 +185,22 @@ function TriggeredPopover({
   const triggerNode = trigger ?? (triggerChild ? triggerChild.props.children : null);
   const contentNode = contentChild
     ? contentChild.props.children
-    : childArray.filter((child) => !isElementOfType(child, PopoverTrigger) && !isElementOfType(child, PopoverContent));
+    : triggerChild
+      ? childArray.filter((child) => !isElementOfType(child, PopoverTrigger) && !isElementOfType(child, PopoverContent))
+      : children;
   const contentPlacement = contentChild?.props.placement ?? placement;
   const contentOffset = contentChild?.props.offset ?? offset;
   const contentShouldFlip = contentChild?.props.shouldFlip ?? shouldFlip;
   const contentShowArrow = contentChild?.props.showArrow ?? showArrow;
   const contentExtraClass = contentChild?.props.className;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const updatePosition = useCallback(() => {
-    if (!triggerRef.current || !contentRef.current) return;
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    const overlayRect = contentRef.current.getBoundingClientRect();
-    setCoords(
-      computeOverlayPosition(
-        triggerRect,
-        { width: overlayRect.width, height: overlayRect.height },
-        contentPlacement,
-        contentOffset,
-        contentShouldFlip,
-      ),
-    );
-  }, [contentPlacement, contentOffset, contentShouldFlip]);
-
-  useLayoutEffect(() => {
-    if (!open) {
-      setCoords(null);
-      return;
-    }
-    updatePosition();
-  }, [open, updatePosition, contentNode]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const handleReposition = () => updatePosition();
-    window.addEventListener('resize', handleReposition);
-    window.addEventListener('scroll', handleReposition, true);
-    return () => {
-      window.removeEventListener('resize', handleReposition);
-      window.removeEventListener('scroll', handleReposition, true);
-    };
-  }, [open, updatePosition]);
+  const coords = useOverlayPosition(
+    triggerRef,
+    contentRef,
+    open,
+    contentPlacement,
+    contentOffset,
+    contentShouldFlip,
+  );
 
   useEffect(() => {
     if (!open || !isDismissable) return;
@@ -332,7 +298,7 @@ function TriggeredPopover({
   }[side];
 
   const overlay =
-    open && mounted ? (
+    open ? (
       <>
         {backdrop !== 'transparent' && (
           <div
