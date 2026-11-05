@@ -102,6 +102,8 @@
     "dompurify": "^3.4.14",
     "lexical": "^0.49.0",
     "lucide-react": "^0.562.0",
-    "react-select": "^5.10.2"
+    "react-select": "^5.10.2",
+    "@fullcalendar/react": "^7.1.4",
+    "temporal-polyfill": "^1.0.7"
   }
 }
