@@ -98,6 +98,43 @@ export const CalendarWithLegend: Story = {
   ),
 };
 
+export const CalendarWithCustomLegend: Story = {
+  render: () => (
+    <FullCalendar
+      initialDate="2026-11-04"
+      showLegend
+      eventLabels={{
+        available: { key: "available", name: "Available", color: "#16a34a" },
+        reserved: { key: "reserved", name: "Reserved", color: "#7c3aed" },
+        blocked: { key: "blocked", name: "Blocked", color: "#dc2626" },
+      }}
+      events={[
+        {
+          id: "a",
+          title: "Open slot",
+          start: "2026-11-04T09:00:00",
+          end: "2026-11-04T10:00:00",
+          label: "available",
+        },
+        {
+          id: "b",
+          title: "Private event",
+          start: "2026-11-05T13:00:00",
+          end: "2026-11-05T15:00:00",
+          label: "reserved",
+        },
+        {
+          id: "c",
+          title: "Maintenance",
+          start: "2026-11-06T08:00:00",
+          end: "2026-11-06T12:00:00",
+          label: "blocked",
+        },
+      ]}
+    />
+  ),
+};
+
 export const CalendarCustomColors: Story = {
   render: () => (
     <FullCalendar

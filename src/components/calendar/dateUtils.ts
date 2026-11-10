@@ -93,7 +93,7 @@ export function normalizeCalendarEvent(
     className: event.className,
     display: event.display,
     editable: event.editable,
-    url: event.url,
+    ...(event.url ? { url: event.url } : {}),
     color: colors.color,
     contrastColor: colors.contrastColor,
     extendedProps: {
@@ -171,7 +171,10 @@ export function mergeColorTheme(
 export function getResolvedLabels(
   eventLabels?: CalendarEventLabelMap,
 ): CalendarEventLabelConfig[] {
-  const labels = { ...DEFAULT_EVENT_LABELS, ...normalizeLabelMap(eventLabels) };
+  if (eventLabels && Object.keys(eventLabels).length > 0) {
+    return Object.values(normalizeLabelMap(eventLabels));
+  }
+  const labels = { ...DEFAULT_EVENT_LABELS };
   const order = ['default', 'blackout', 'holiday', 'reserved', 'custom'];
   const seen = new Set<string>();
   const result: CalendarEventLabelConfig[] = [];
