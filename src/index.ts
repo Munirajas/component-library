@@ -72,6 +72,20 @@ export type {
   CalendarToolbarContext,
   CalendarToolbarItems,
 } from './components/calendar';
+export type {
+  SchedulerProps,
+  ScheduleChange,
+  ScheduleChangeAction,
+  ScheduleDate,
+  ScheduleItem,
+  ScheduleOption,
+  SchedulerDefaults,
+  SchedulerView,
+  ScheduleSubmitResult,
+  RecurrenceRuleValues,
+  RecurrenceRuleBuilderHandle,
+  RecurrenceRuleErrors,
+} from './components/scheduler';
 export type { FilterDefinition, FilterOption, FilterType, FilterPopoverProps } from './components/dataDisplay/Table/FilterPopover';
 export { FilterPopover } from './components/dataDisplay/Table/FilterPopover';
 

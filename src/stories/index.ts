@@ -20,3 +20,4 @@ export * from "./ThemeDemo.stories";
 export * from "./feedback/Popover.stories";
 export * from "./feedback/Tooltip.stories";
 export * from "./calendar/FullCalendar.stories";
+export * from "./scheduler/Scheduler.stories";
