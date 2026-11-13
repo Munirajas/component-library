@@ -2,7 +2,6 @@
 
 import {
   forwardRef,
-  type ReactNode,
   useId,
   useImperativeHandle,
   useState,
@@ -19,11 +18,13 @@ import {
   type RecurrenceRuleErrors,
   validateRecurrenceRule,
 } from "./recurrence-validation";
+import { ScheduleOptionFields } from "./ScheduleOptionFields";
 import { TimeInput } from "./TimeInput";
 import type {
   DailyIntervalUnit,
   Frequency,
   RecurrenceRuleValues,
+  ScheduleOption,
   SetPosition,
   WeekDay,
 } from "./types";
@@ -90,7 +91,6 @@ interface SwitchProps {
   label: string;
   checked: boolean;
   disabled?: boolean;
-  stateLabel?: string;
   testId: string;
   onChange: (checked: boolean) => void;
 }
@@ -99,12 +99,11 @@ function ScheduleSwitch({
   label,
   checked,
   disabled,
-  stateLabel,
   testId,
   onChange,
 }: SwitchProps) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex h-[38px] items-center gap-3">
       <span className="text-sm font-medium text-gray-700">{label}</span>
       <button
         data-testid={testId}
@@ -114,19 +113,16 @@ function ScheduleSwitch({
         aria-label={label}
         onClick={() => onChange(!checked)}
         disabled={disabled}
-        className={`relative h-6 w-11 rounded-full transition-colors  ${
-          checked ? "bg-blue-500 disabled:bg-blue-300" : "bg-gray-300"
+        className={`relative h-[26px] w-[50px] shrink-0 cursor-pointer rounded-full transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-60 ${
+          checked ? "bg-[#3b82f6]" : "bg-[#ccc]"
         }`}
       >
         <span
-          className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
-            checked ? "-translate-x-5" : "-translate-x-0.5"
+          className={`absolute bottom-[3px] left-[3px] h-5 w-5 rounded-full bg-white shadow transition-transform duration-300 ${
+            checked ? "translate-x-6" : "translate-x-0"
           }`}
         />
       </button>
-      {stateLabel ? (
-        <span className="text-sm text-gray-600">{stateLabel}</span>
-      ) : null}
     </div>
   );
 }
@@ -140,10 +136,13 @@ interface Props {
   onChange: (value: RecurrenceRuleValues) => void;
   error?: string | null;
   disabled?: boolean;
-  /** The status switch is shown when `onActiveChange` is set. */
+  /** The Active switch is shown when `onActiveChange` is set. */
   isActive?: boolean;
   onActiveChange?: (isActive: boolean) => void;
-  beforeRecurring?: ReactNode;
+  /** Type dropdown shown in the same row as Recurring / Active when options exist. */
+  types?: ScheduleOption[];
+  typeId?: string;
+  onTypeChange?: (typeId: string) => void;
   showRecurrence?: boolean;
   /** Months between the start date and the default "End by" date. */
   recurrenceMonths?: number;
@@ -160,12 +159,16 @@ export const RecurrenceRuleBuilder = forwardRef<
     disabled = false,
     isActive = true,
     onActiveChange,
-    beforeRecurring,
+    types,
+    typeId = "",
+    onTypeChange,
     showRecurrence = true,
     recurrenceMonths = DEFAULT_RECURRENCE_MONTHS,
   },
   ref,
 ) {
+  const showType = Boolean(types?.length && onTypeChange);
+  const showSwitchRow = showType || showRecurrence || Boolean(onActiveChange);
   const fieldId = useId();
   const idFor = (name: string) => `${fieldId}${name}`;
   const value: RecurrenceRuleValues = {
@@ -313,9 +316,18 @@ export const RecurrenceRuleBuilder = forwardRef<
           </div>
         </div>
       </div>
-      {beforeRecurring}
-      {(showRecurrence || onActiveChange) && (
-        <div className="flex items-center gap-20 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2">
+      {showSwitchRow && (
+        <div className="flex flex-wrap items-end gap-6">
+          {showType ? (
+            <div className="min-w-[180px] flex-1">
+              <ScheduleOptionFields
+                types={types}
+                typeId={typeId}
+                disabled={disabled}
+                onTypeChange={onTypeChange!}
+              />
+            </div>
+          ) : null}
           {showRecurrence && (
             <ScheduleSwitch
               label="Recurring"
@@ -327,10 +339,9 @@ export const RecurrenceRuleBuilder = forwardRef<
           )}
           {onActiveChange && (
             <ScheduleSwitch
-              label="Status"
+              label="Active"
               checked={isActive}
               disabled={disabled}
-              stateLabel={isActive ? "Active" : "Inactive"}
               testId="modules-amenities-components-schedule-recurrencerulebuilder--button--active"
               onChange={onActiveChange}
             />

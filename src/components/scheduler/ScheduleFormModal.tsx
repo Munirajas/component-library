@@ -14,7 +14,6 @@ import {
   type RecurrenceRuleBuilderHandle,
 } from "./RecurrenceRuleBuilder";
 import { toScheduleDates } from "./schedule-dates";
-import { ScheduleOptionFields } from "./ScheduleOptionFields";
 import type {
   EditScope,
   ScheduleItem,
@@ -291,14 +290,9 @@ export function ScheduleFormModal({
             recurrenceMonths={defaults?.recurrenceMonths}
             isActive={isActive}
             onActiveChange={showStatus ? setIsActive : undefined}
-            beforeRecurring={
-              <ScheduleOptionFields
-                types={types}
-                typeId={typeId}
-                disabled={isBusy}
-                onTypeChange={setTypeId}
-              />
-            }
+            types={types}
+            typeId={typeId}
+            onTypeChange={setTypeId}
           />
         </div>
 

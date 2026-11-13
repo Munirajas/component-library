@@ -189,9 +189,17 @@ function buildRRuleOptions(
   return options;
 }
 
+/** One-time schedules are written as a single occurrence so every schedule has an RRULE. */
 export function toRRuleString(
   values?: RecurrenceRuleValues | null,
 ): string | null {
+  if (values?.frequency === "NONE") {
+    const dtstart = combine(values.startDate, values.startTime);
+    if (!dtstart) return null;
+    return new RRule({ freq: RRule.DAILY, count: 1, dtstart })
+      .toString()
+      .replace(/Z/g, "");
+  }
   const rule = buildRRule(values);
   if (!rule) return null;
   return Array.from(new Set(rule.toString().split("\n")))

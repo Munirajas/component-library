@@ -80,6 +80,7 @@ export function buildDefaultRecurrenceRule(
     dailyInterval: 30,
     dailyIntervalUnit: "MINUTE",
     dailyEndTime: "23:59",
+    excludedDateTimes: [],
   };
 
   return { ...base, ...overrides };

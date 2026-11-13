@@ -70,17 +70,15 @@ export function ScheduleOptionFields({
   if (!types?.length) return null;
 
   return (
-    <div className="flex gap-3">
-      <OptionSelect
-        data-testid="components-scheduler-scheduleoptionfields--optionselect--scheduletype"
-        id={`${fieldId}scheduleType`}
-        label="Type"
-        value={typeId}
-        options={types}
-        disabled={disabled}
-        testId="type"
-        onChange={onTypeChange}
-      />
-    </div>
+    <OptionSelect
+      data-testid="components-scheduler-scheduleoptionfields--optionselect--scheduletype"
+      id={`${fieldId}scheduleType`}
+      label="Type"
+      value={typeId}
+      options={types}
+      disabled={disabled}
+      testId="type"
+      onChange={onTypeChange}
+    />
   );
 }

@@ -48,6 +48,16 @@ export function toOccurrenceSchedule(
 ): ScheduleItem {
   const start = splitDateTime(date.startDateTime);
   const end = splitDateTime(date.endDateTime);
+  const rule = normalizeRecurrenceRule({
+    ...series.scheduleJson.rule,
+    startDate: start.date,
+    startTime: start.time,
+    endDate: end.date,
+    endTime: end.time,
+    frequency: "NONE",
+    recurrenceEndDate: start.date ? addMonths(start.date, 1) : "",
+    excludedDateTimes: [],
+  });
 
   return {
     name: date.scheduleName || series.name,
@@ -57,19 +67,7 @@ export function toOccurrenceSchedule(
     parentScheduleId: series.id,
     originalStartDateTime:
       normalizeLocalDateTime(date.startDateTime) ?? date.startDateTime,
-    scheduleJson: {
-      rule: normalizeRecurrenceRule({
-        ...series.scheduleJson.rule,
-        startDate: start.date,
-        startTime: start.time,
-        endDate: end.date,
-        endTime: end.time,
-        frequency: "NONE",
-        recurrenceEndDate: start.date ? addMonths(start.date, 1) : "",
-        excludedDateTimes: undefined,
-      }),
-      rruleText: null,
-    },
+    scheduleJson: { rule, rruleText: toRRuleString(rule) },
     datesJson: [date],
   };
 }
